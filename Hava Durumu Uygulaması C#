@@ -1,7 +1,10 @@
+// Projede kullanılan kütüphaneler.
 using System;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+
+// Bu kısımda mevcut hava durumunu temsil etmek için bir sınıf tanımlanmıştır.
 
 public class Weather
 {
@@ -9,6 +12,8 @@ public class Weather
     public string Wind { get; set; }
     public string Description { get; set; }
 }
+
+//Bu kısımda birden fazla gün için hava durumu tahminini temsil etmek için bir sınıf tanımlanmıştır.
 
 public class WeatherForecast
 {
@@ -19,27 +24,34 @@ public class WeatherForecast
     public string Description { get; set; }
 }
 
+// Ana program sınıfı
 class Program
 {
+    // Bu kısımda HTTP istekleri yapmak için HttpClient sınıfından bir örnek oluşturdum.
     static HttpClient client = new HttpClient();
 
+     // Üç farklı şehir için GetWeather api çağrılır.
+    // Programı başlatan ana metot
     static async Task Main()
-    {
+    {    
         await GetWeather("https://goweather.herokuapp.com/weather/istanbul", "Istanbul");
         await GetWeather("https://goweather.herokuapp.com/weather/izmir", "Izmir");
         await GetWeather("https://goweather.herokuapp.com/weather/ankara", "Ankara");
     }
-
+    // Mevcut hava durumu bilgisini alıp ekrana yazdıran metot
     static async Task GetWeather(string apiUrl, string city)
     {
         try
         {
+         // Belirtilen API URL'sine HTTP GET isteği yapar
+
             HttpResponseMessage response = await client.GetAsync(apiUrl);
             response.EnsureSuccessStatusCode();
+             // Yanıt içeriğini bir string olarak okur.
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            // JSON verisini uygun sınıf yapısına dönüştürme
+            // JSON verisini uygun sınıf yapısına dönüştürme işlemleri.
             Weather weather = JsonConvert.DeserializeObject<Weather>(responseBody);
 
             // Konsol çıktısı
@@ -48,11 +60,11 @@ class Program
             Console.WriteLine($"Rüzgar: {weather.Wind}");
             Console.WriteLine($"Açıklama: {weather.Description}");
 
-            // 3 günlük hava durumu tahmini için ayrı bir API çağrısı yapabilir ve sonuçları işleyebilirsiniz.
             await GetWeatherForecast(apiUrl);
         }
         catch (HttpRequestException e)
-        {
+        { 
+            //HTTP isteği başarısız olursa bu istisnayı ele alır.
             Console.WriteLine($"Hata oluştu: {e.Message}");
             Console.WriteLine("Lütfen daha sonra tekrar deneyin.");
         }
@@ -62,16 +74,16 @@ static async Task GetWeatherForecast(string apiUrl)
 {
     try
     {
-        // 3 günlük hava durumu tahmini API çağrısı
+        // 3 günlük hava durumu tahmini API çağrısı kısmı.
         HttpResponseMessage forecastResponse = await client.GetAsync(apiUrl + "/forecast");
         forecastResponse.EnsureSuccessStatusCode();
 
         string forecastResponseBody = await forecastResponse.Content.ReadAsStringAsync();
 
-        // JSON verisini uygun sınıf yapısına dönüştürme
+        // JSON verisini uygun sınıf yapısına dönüştürme işlemleri.
         WeatherForecast[] forecasts = JsonConvert.DeserializeObject<WeatherForecast[]>(forecastResponseBody);
 
-        // Konsol çıktısı
+        // Terminal ekranı üzerinde çalışan çıktılar bu kısımda çalışır.
         Console.WriteLine("\n3 Günlük Hava Durumu Tahminleri:");
         foreach (var forecast in forecasts)
         {
