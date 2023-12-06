@@ -1,0 +1,9 @@
+Bu C# programı, belirli bir hava durumu API'sini kullanarak farklı şehirlerin mevcut hava durumu bilgilerini ve 3 günlük hava durumu tahminlerini alır. Program, HTTP istekleri yapmak ve JSON verilerini uygun sınıf yapılarına dönüştürmek için .NET HttpClient ve Newtonsoft.Json kütüphanelerini kullanmaktadır.
+
+Programın Temel İşlevselliği:
+1. Belirli şehirler için mevcut hava durumu bilgilerini alır.
+2. Mevcut hava durumu bilgilerini ekrana yazdırır (sıcaklık, rüzgar hızı, açıklama).
+3. Ayrıca, aynı API üzerinden 3 günlük hava durumu tahminlerini alır.
+4. 3 günlük hava durumu tahminlerini ekrana yazdırır (tarih, minimum ve maksimum sıcaklık, rüzgar hızı, açıklama).
+
+Not: Program, herhangi bir HTTP isteği sırasında oluşabilecek hataları ele alarak kullanıcıya bilgi verir ve hatayla başa çıkabilir.
