@@ -7,37 +7,39 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// Ders sınıfı, ders bilgilerini temsil eder
 public class Ders {
     private String dersKodu;
     private String dersAd;
-    private String dersDonem;
+    private String dersDonem
 
-
+    // Getter ve setter metotları
+    // Dersin kodunu döndüren getter metodu
     public String getDersKodu() {
         return dersKodu;
     }
-
+    // Dersin kodunu set eden setter metodu
     public void setDersKodu(String dersKodu) {
         this.dersKodu = dersKodu;
     }
-
+     // Dersin adını döndüren getter metodu
     public String getDersAd() {
         return dersAd;
     }
-
+    // Dersin adını set eden setter metodu
     public void setDersAd(String dersAd) {
         this.dersAd = dersAd;
     }
-
+    // Dersin dönemini döndüren getter metodu
     public String getDersDonem() {
         return dersDonem;
     }
-
+    // Dersin dönemini set eden setter metodu
     public void setDersDonem(String dersDonem) {
         this.dersDonem = dersDonem;
     }
 }
-
+// Ogrenci sınıfı, öğrenci bilgilerini temsil eder
 class Ogrenci {
     private String ogrenciNo;
     private String ogrenciAd;
@@ -45,15 +47,16 @@ class Ogrenci {
     private String ogrenciBolum;
     private String ogrenciDersler;
 
-
+    // Getter ve setter metotları
+    // Öğrenci numarasını döndüren getter metodu
     public String getOgrenciNo() {
         return ogrenciNo;
     }
-
+    // Öğrenci numarasını set eden setter metodu
     public void setOgrenciNo(String ogrenciNo) {
         this.ogrenciNo = ogrenciNo;
     }
-
+    // Öğrenci adını döndüren getter metodu
     public String getOgrenciAd() {
         return ogrenciAd;
     }
@@ -86,7 +89,10 @@ class Ogrenci {
         this.ogrenciDersler = ogrenciDersler;
     }
 }
-
+// AnaForm sınıfı, uygulamanın ana penceresini oluşturur
+// Ana pencere özellikleri ve menü bar oluşturulur
+// Ders Kayıt ve Öğrenci Kayıt seçenekleri eklenir
+// İlgili formlar açıldığında yeni bir pencere görüntülenir
 class AnaForm extends JFrame {
 
     public AnaForm() {
@@ -132,7 +138,7 @@ class AnaForm extends JFrame {
         });
     }
 }
-
+// DersKayitFormu sınıfı, ders kaydı ekranını oluşturur
 class DersKayitFormu extends JFrame {
     private JTextField txtDersKodu, txtDersAd, txtDersDonem;
 
@@ -185,7 +191,7 @@ class DersKayitFormu extends JFrame {
         }
     }
 }
-
+// OgrenciKayitFormu sınıfı, öğrenci kaydı ekranını oluşturur
 class OgrenciKayitFormu extends JFrame {
     private JTextField txtOgrenciNo, txtOgrenciAd, txtOgrenciSoyad, txtOgrenciBolum;
     private JComboBox<String> cmbOgrenciDersler;
