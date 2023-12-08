@@ -1,0 +1,39 @@
+/** DOCSTRİNG
+ * Bu Java uygulaması, ders ve öğrenci bilgilerini kaydeden bir öğrenci kayıt uygulamasını temsil eder.
+ * Uygulama, JSON formatında veri dosyalarına ders ve öğrenci bilgilerini kaydedebilir.
+ * Ders ve öğrenci bilgileri, ilgili sınıfların özellikleri ve metotları aracılığıyla temsil edilir.
+ * Ayrıca, kullanıcı arayüzü (UI) için Swing kütüphanesi kullanılarak bir ana form ve iki kayıt formu sağlar.
+ * 
+ * Ders Sınıfı:
+ * - Ders kodu, adı ve dönem bilgilerini saklar.
+ * - Getter ve setter metotları ile erişim sağlar.
+ * 
+ * Ogrenci Sınıfı:
+ * - Öğrenci numarası, adı, soyadı, bölümü ve aldığı dersler bilgilerini saklar.
+ * - Getter ve setter metotları ile erişim sağlar.
+ * 
+ * AnaForm Sınıfı:
+ * - Ana pencereyi oluşturur ve menü barını içerir.
+ * - Ders Kayıt ve Öğrenci Kayıt seçeneklerini içeren menüler ile ilgili formları açar.
+ * 
+ * DersKayitFormu Sınıfı:
+ * - Ders kayıt formunu oluşturur ve ders bilgilerini JSON formatında dosyaya kaydeder.
+ * 
+ * OgrenciKayitFormu Sınıfı:
+ * - Öğrenci kayıt formunu oluşturur, ders seçimleri için ComboBox ekler ve öğrenci bilgilerini JSON formatında dosyaya kaydeder.
+ * 
+ * Uygulama, SwingUtilities.invokeLater() yöntemi ile başlatılır ve kullanıcıya uygun bir arayüz sunar.
+ * 
+ * @author Your Name
+ * @version 1.0
+ */
+public class Uygulama {
+
+    // Uygulama başlangıç noktası
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            AnaForm anaForm = new AnaForm();
+            anaForm.setVisible(true);
+        });
+    }
+}
