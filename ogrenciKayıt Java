@@ -1,0 +1,253 @@
+// Java'nın GSON kütüphanesi kullanılarak JSON verilerini işlemek için import ettim.
+import com.google.gson.Gson;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Ders {
+    private String dersKodu;
+    private String dersAd;
+    private String dersDonem;
+
+
+    public String getDersKodu() {
+        return dersKodu;
+    }
+
+    public void setDersKodu(String dersKodu) {
+        this.dersKodu = dersKodu;
+    }
+
+    public String getDersAd() {
+        return dersAd;
+    }
+
+    public void setDersAd(String dersAd) {
+        this.dersAd = dersAd;
+    }
+
+    public String getDersDonem() {
+        return dersDonem;
+    }
+
+    public void setDersDonem(String dersDonem) {
+        this.dersDonem = dersDonem;
+    }
+}
+
+class Ogrenci {
+    private String ogrenciNo;
+    private String ogrenciAd;
+    private String ogrenciSoyad;
+    private String ogrenciBolum;
+    private String ogrenciDersler;
+
+
+    public String getOgrenciNo() {
+        return ogrenciNo;
+    }
+
+    public void setOgrenciNo(String ogrenciNo) {
+        this.ogrenciNo = ogrenciNo;
+    }
+
+    public String getOgrenciAd() {
+        return ogrenciAd;
+    }
+
+    public void setOgrenciAd(String ogrenciAd) {
+        this.ogrenciAd = ogrenciAd;
+    }
+
+    public String getOgrenciSoyad() {
+        return ogrenciSoyad;
+    }
+
+    public void setOgrenciSoyad(String ogrenciSoyad) {
+        this.ogrenciSoyad = ogrenciSoyad;
+    }
+
+    public String getOgrenciBolum() {
+        return ogrenciBolum;
+    }
+
+    public void setOgrenciBolum(String ogrenciBolum) {
+        this.ogrenciBolum = ogrenciBolum;
+    }
+
+    public String getOgrenciDersler() {
+        return ogrenciDersler;
+    }
+
+    public void setOgrenciDersler(String ogrenciDersler) {
+        this.ogrenciDersler = ogrenciDersler;
+    }
+}
+
+class AnaForm extends JFrame {
+
+    public AnaForm() {
+        setTitle("Öğrenci Kayıt Uygulaması");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Menü");
+
+        JMenuItem dersKayitItem = new JMenuItem("Ders Kayıt");
+        dersKayitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DersKayitFormu dersForm = new DersKayitFormu();
+                dersForm.setVisible(true);
+            }
+        });
+
+        JMenuItem ogrenciKayitItem = new JMenuItem("Öğrenci Kayıt");
+        ogrenciKayitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OgrenciKayitFormu ogrenciForm = new OgrenciKayitFormu();
+                ogrenciForm.setVisible(true);
+            }
+        });
+
+        menu.add(dersKayitItem);
+        menu.add(ogrenciKayitItem);
+        menuBar.add(menu);
+
+        setJMenuBar(menuBar);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                AnaForm anaForm = new AnaForm();
+                anaForm.setVisible(true);
+            }
+        });
+    }
+}
+
+class DersKayitFormu extends JFrame {
+    private JTextField txtDersKodu, txtDersAd, txtDersDonem;
+
+    public DersKayitFormu() {
+        setTitle("Ders Kayıt Formu");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2));
+
+        panel.add(new JLabel("Ders Kodu:"));
+        txtDersKodu = new JTextField();
+        panel.add(txtDersKodu);
+
+        panel.add(new JLabel("Ders Adı:"));
+        txtDersAd = new JTextField();
+        panel.add(txtDersAd);
+
+        panel.add(new JLabel("Ders Dönemi:"));
+        txtDersDonem = new JTextField();
+        panel.add(txtDersDonem);
+
+        JButton btnKaydet = new JButton("Kaydet");
+        btnKaydet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kaydet();
+            }
+        });
+        panel.add(btnKaydet);
+
+        add(panel);
+    }
+
+    private void kaydet() {
+        Ders ders = new Ders();
+        ders.setDersKodu(txtDersKodu.getText());
+        ders.setDersAd(txtDersAd.getText());
+        ders.setDersDonem(txtDersDonem.getText());
+
+        // Ders objesini JSON formatında dosyaya kaydetme
+        try (FileWriter file = new FileWriter("ders_kayit.json")) {
+            Gson gson = new Gson();
+            gson.toJson(ders, file);
+            JOptionPane.showMessageDialog(this, "Ders kaydedildi");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage(), "Hata", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
+class OgrenciKayitFormu extends JFrame {
+    private JTextField txtOgrenciNo, txtOgrenciAd, txtOgrenciSoyad, txtOgrenciBolum;
+    private JComboBox<String> cmbOgrenciDersler;
+
+    public OgrenciKayitFormu() {
+        setTitle("Öğrenci Kayıt Formu");
+        setSize(300, 250);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6, 2));
+
+        panel.add(new JLabel("Öğrenci No:"));
+        txtOgrenciNo = new JTextField();
+        panel.add(txtOgrenciNo);
+
+        panel.add(new JLabel("Öğrenci Adı:"));
+        txtOgrenciAd = new JTextField();
+        panel.add(txtOgrenciAd);
+
+        panel.add(new JLabel("Öğrenci Soyadı:"));
+        txtOgrenciSoyad = new JTextField();
+        panel.add(txtOgrenciSoyad);
+
+        panel.add(new JLabel("Öğrenci Bölümü:"));
+        txtOgrenciBolum = new JTextField();
+        panel.add(txtOgrenciBolum);
+
+        panel.add(new JLabel("Ders Seçimi:"));
+        cmbOgrenciDersler = new JComboBox<>();
+        // Ders kayıtlarını okuyup ComboBox'a ekleme işlemi burada yapılmalıdır.
+
+        panel.add(cmbOgrenciDersler);
+
+        JButton btnKaydet = new JButton("Kaydet");
+        btnKaydet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kaydet();
+            }
+        });
+        panel.add(btnKaydet);
+
+        add(panel);
+    }
+
+    private void kaydet() {
+        Ogrenci ogrenci = new Ogrenci();
+        ogrenci.setOgrenciNo(txtOgrenciNo.getText());
+        ogrenci.setOgrenciAd(txtOgrenciAd.getText());
+        ogrenci.setOgrenciSoyad(txtOgrenciSoyad.getText());
+        ogrenci.setOgrenciBolum(txtOgrenciBolum.getText());
+        ogrenci.setOgrenciDersler(cmbOgrenciDersler.getSelectedItem().toString());
+
+        // Ogrenci objesini JSON formatında dosyaya kaydetme
+        try (FileWriter file = new FileWriter("ogrenci_kayit.json")) {
+            Gson gson = new Gson();
+            gson.toJson(ogrenci, file);
+            JOptionPane.showMessageDialog(this, "Öğrenci kaydedildi");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage(), "Hata", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
